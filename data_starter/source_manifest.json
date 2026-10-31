@@ -1,0 +1,127 @@
+{
+  "generator": "generate_dataset.py",
+  "version": "1.0.0",
+  "command": "python generate_dataset.py --seed 20261022 --scale 0.05 --as-of 2026-10-22 --out data_starter",
+  "seed": 20261022,
+  "parameters": {
+    "learners": 1000,
+    "courses": 50,
+    "credentials": 500,
+    "verifications": 250,
+    "seed": 20261022,
+    "as_of": "2026-10-22",
+    "scale": 0.05
+  },
+  "external_data_used": [],
+  "provenance": "Fully synthetic. Names come from invented pools, emails use the reserved example.org domain, no real personal data, no scraped or licensed datasets. Signing keys are demo keys derived from the seed.",
+  "files": {
+    "actors.csv": {
+      "rows": 57,
+      "sha256": "2b882cfe9a9805e246883f9542fa57563a361b296192cb7107bdc37f203a6e08"
+    },
+    "json/actors.json": {
+      "rows": 57,
+      "sha256": "52a6bba656f872c7767a517d1b1a080284f429d096ac022d3b1e5d2efcc6caac"
+    },
+    "issuers.csv": {
+      "rows": 12,
+      "sha256": "941969c0494e8e01a38669ca20c9621bc68dad4822e6f2c0bc0a5d267b578a25"
+    },
+    "json/issuers.json": {
+      "rows": 12,
+      "sha256": "63394575182d95b9e66b2815e53225b760d59c5cbf69e480c7adb3ab747169d1"
+    },
+    "learners.csv": {
+      "rows": 1000,
+      "sha256": "e453fa13a8ea33820a5b32a0661dad7debb7a0017829127943d1172f936d17d6"
+    },
+    "json/learners.json": {
+      "rows": 1000,
+      "sha256": "8ffab0bb8fd3d913d4d92b991d513d37e22c9f8f07a0ff3067abd0e5886c22a9"
+    },
+    "courses.csv": {
+      "rows": 50,
+      "sha256": "10d63dcded6653d000efe70463da2f7cfa715e0a23b2bc4acf47cdbd8212332a"
+    },
+    "json/courses.json": {
+      "rows": 50,
+      "sha256": "92602459aa7a295b894033366b8a1a8fd427bf6f6509756484a164b7ad57cd1a"
+    },
+    "course_issuer_history.csv": {
+      "rows": 67,
+      "sha256": "fbda0b8d2ef9c44047e68f01139dd04297d398d39c9e25ee1199ce42a735840e"
+    },
+    "json/course_issuer_history.json": {
+      "rows": 67,
+      "sha256": "037311c8e77a48d52092d60e200e85b2fefd57e41ad7caaba89200bc845f9e2e"
+    },
+    "credential_rules.csv": {
+      "rows": 56,
+      "sha256": "f1224c196342333378b8a32559c124097256c6feeb61526eca2b06e899103c54"
+    },
+    "json/credential_rules.json": {
+      "rows": 56,
+      "sha256": "29374f15aeaa45cd3bbec16e92bb04b19a2b3705565af0b23365e3a3b2f04f69"
+    },
+    "completion_records.csv": {
+      "rows": 2202,
+      "sha256": "788a074c6a429532a4ba2d00b39c99d24ac4ba396671f20e8918217c4570a4eb"
+    },
+    "json/completion_records.json": {
+      "rows": 2202,
+      "sha256": "0f78bb2dd7b2b0514178587e4c89f566d057b9f3c3710371a09fb76f2256b059"
+    },
+    "assessments.csv": {
+      "rows": 7595,
+      "sha256": "687127e3071191517740fd31e2d3604ac7dfb085174cc9cfb7049df75668d903"
+    },
+    "json/assessments.json": {
+      "rows": 7595,
+      "sha256": "b1993d65cf15e29b6b4ce44fe2901c0101adc9842bd0939f5085245c76c94409"
+    },
+    "credentials.csv": {
+      "rows": 500,
+      "sha256": "24558abd984441ae7d6cc8f6ba82555601f1e92ea347f6c6e0ed3aec5817af54"
+    },
+    "json/credentials.json": {
+      "rows": 500,
+      "sha256": "275a304c055ccc05f882ac6b8f81bab412182ced78027162a3c2ff8f2b665015"
+    },
+    "revocations.csv": {
+      "rows": 30,
+      "sha256": "b2f9927dd7ea1a14e45e5e9e4923a4894d0d70058c0e620de2349c75cedd12b6"
+    },
+    "json/revocations.json": {
+      "rows": 30,
+      "sha256": "048369048eefafe7c395fb4dd58f0f7a1755b5e98f2a5bfc6e2a9bdbbff2a1d0"
+    },
+    "verification_requests.csv": {
+      "rows": 250,
+      "sha256": "d706c3b5ee52593bf84d96beb50824b28f1d57a939434d3f2068e6ef118554cb"
+    },
+    "json/verification_requests.json": {
+      "rows": 250,
+      "sha256": "53b3adbcb8cfcf6e9c51aecaddd20065d0e396704421e29201ca63e7c1402e69"
+    },
+    "audit_events.csv": {
+      "rows": 5092,
+      "sha256": "be8601903a29d90df5f2a62346c16f03096ff50250dbd57d77c18a44d74e9cfc"
+    },
+    "json/audit_events.json": {
+      "rows": 5092,
+      "sha256": "ab4c987390dabb13bb8cabd918ad6cc5eab550db45f0507b2b08a5389fffc770"
+    },
+    "ground_truth.csv": {
+      "rows": 257,
+      "sha256": "381083e4de45ea14f283fc6a059d268cd28bb57006381ebbba4f09456f1277d4"
+    },
+    "ground_truth.json": {
+      "rows": 257,
+      "sha256": "4ca722d03c1b2b2caeff4001d2ff7d95ffb390b7c088fdc4000f252c4e77936f"
+    },
+    "seed.sql": {
+      "rows": 16911,
+      "sha256": "c12f6f34572241fd679ba5a8ac017a991f7457f0f8de64c1c24fbf58691091b2"
+    }
+  }
+}

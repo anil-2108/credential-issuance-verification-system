@@ -1,0 +1,223 @@
+{
+  "seed": 20261022,
+  "scale": 1.0,
+  "all_identical": true,
+  "files": [
+    {
+      "file": "actors.csv",
+      "rows_run1": 57,
+      "rows_run2": 57,
+      "sha256_run1": "2b882cfe9a9805e2",
+      "sha256_run2": "2b882cfe9a9805e2",
+      "identical": true
+    },
+    {
+      "file": "assessments.csv",
+      "rows_run1": 153418,
+      "rows_run2": 153418,
+      "sha256_run1": "937d261dea6d81b9",
+      "sha256_run2": "937d261dea6d81b9",
+      "identical": true
+    },
+    {
+      "file": "audit_events.csv",
+      "rows_run1": 101272,
+      "rows_run2": 101272,
+      "sha256_run1": "e3a424ddc33fba69",
+      "sha256_run2": "e3a424ddc33fba69",
+      "identical": true
+    },
+    {
+      "file": "completion_records.csv",
+      "rows_run1": 44045,
+      "rows_run2": 44045,
+      "sha256_run1": "b7093e795a4e3fe1",
+      "sha256_run2": "b7093e795a4e3fe1",
+      "identical": true
+    },
+    {
+      "file": "course_issuer_history.csv",
+      "rows_run1": 1306,
+      "rows_run2": 1306,
+      "sha256_run1": "80fdee50df1df680",
+      "sha256_run2": "80fdee50df1df680",
+      "identical": true
+    },
+    {
+      "file": "courses.csv",
+      "rows_run1": 1000,
+      "rows_run2": 1000,
+      "sha256_run1": "32c1ba6395d3bcb7",
+      "sha256_run2": "32c1ba6395d3bcb7",
+      "identical": true
+    },
+    {
+      "file": "credential_rules.csv",
+      "rows_run1": 1096,
+      "rows_run2": 1096,
+      "sha256_run1": "93e4ac525beb3a77",
+      "sha256_run2": "93e4ac525beb3a77",
+      "identical": true
+    },
+    {
+      "file": "credentials.csv",
+      "rows_run1": 10000,
+      "rows_run2": 10000,
+      "sha256_run1": "bd9b3aeb2bce1173",
+      "sha256_run2": "bd9b3aeb2bce1173",
+      "identical": true
+    },
+    {
+      "file": "ground_truth.csv",
+      "rows_run1": 5140,
+      "rows_run2": 5140,
+      "sha256_run1": "03f59ff9cbd87415",
+      "sha256_run2": "03f59ff9cbd87415",
+      "identical": true
+    },
+    {
+      "file": "ground_truth.json",
+      "rows_run1": 5140,
+      "rows_run2": 5140,
+      "sha256_run1": "8122346a688630a6",
+      "sha256_run2": "8122346a688630a6",
+      "identical": true
+    },
+    {
+      "file": "issuers.csv",
+      "rows_run1": 12,
+      "rows_run2": 12,
+      "sha256_run1": "941969c0494e8e01",
+      "sha256_run2": "941969c0494e8e01",
+      "identical": true
+    },
+    {
+      "file": "json/actors.json",
+      "rows_run1": 57,
+      "rows_run2": 57,
+      "sha256_run1": "52a6bba656f872c7",
+      "sha256_run2": "52a6bba656f872c7",
+      "identical": true
+    },
+    {
+      "file": "json/assessments.json",
+      "rows_run1": 153418,
+      "rows_run2": 153418,
+      "sha256_run1": "eb85339882be9185",
+      "sha256_run2": "eb85339882be9185",
+      "identical": true
+    },
+    {
+      "file": "json/audit_events.json",
+      "rows_run1": 101272,
+      "rows_run2": 101272,
+      "sha256_run1": "374174a89470fcd6",
+      "sha256_run2": "374174a89470fcd6",
+      "identical": true
+    },
+    {
+      "file": "json/completion_records.json",
+      "rows_run1": 44045,
+      "rows_run2": 44045,
+      "sha256_run1": "a68e437deb5f0e78",
+      "sha256_run2": "a68e437deb5f0e78",
+      "identical": true
+    },
+    {
+      "file": "json/course_issuer_history.json",
+      "rows_run1": 1306,
+      "rows_run2": 1306,
+      "sha256_run1": "0272643d57ec8136",
+      "sha256_run2": "0272643d57ec8136",
+      "identical": true
+    },
+    {
+      "file": "json/courses.json",
+      "rows_run1": 1000,
+      "rows_run2": 1000,
+      "sha256_run1": "768f0c15a2cbebd8",
+      "sha256_run2": "768f0c15a2cbebd8",
+      "identical": true
+    },
+    {
+      "file": "json/credential_rules.json",
+      "rows_run1": 1096,
+      "rows_run2": 1096,
+      "sha256_run1": "ebc4c2ddf295adb8",
+      "sha256_run2": "ebc4c2ddf295adb8",
+      "identical": true
+    },
+    {
+      "file": "json/credentials.json",
+      "rows_run1": 10000,
+      "rows_run2": 10000,
+      "sha256_run1": "5a61078a7bf9aadc",
+      "sha256_run2": "5a61078a7bf9aadc",
+      "identical": true
+    },
+    {
+      "file": "json/issuers.json",
+      "rows_run1": 12,
+      "rows_run2": 12,
+      "sha256_run1": "63394575182d95b9",
+      "sha256_run2": "63394575182d95b9",
+      "identical": true
+    },
+    {
+      "file": "json/learners.json",
+      "rows_run1": 20000,
+      "rows_run2": 20000,
+      "sha256_run1": "b4149e6a95ceb4b0",
+      "sha256_run2": "b4149e6a95ceb4b0",
+      "identical": true
+    },
+    {
+      "file": "json/revocations.json",
+      "rows_run1": 597,
+      "rows_run2": 597,
+      "sha256_run1": "5e76918cb50e237c",
+      "sha256_run2": "5e76918cb50e237c",
+      "identical": true
+    },
+    {
+      "file": "json/verification_requests.json",
+      "rows_run1": 5000,
+      "rows_run2": 5000,
+      "sha256_run1": "721d585a393e618b",
+      "sha256_run2": "721d585a393e618b",
+      "identical": true
+    },
+    {
+      "file": "learners.csv",
+      "rows_run1": 20000,
+      "rows_run2": 20000,
+      "sha256_run1": "d4f644446ac4986b",
+      "sha256_run2": "d4f644446ac4986b",
+      "identical": true
+    },
+    {
+      "file": "revocations.csv",
+      "rows_run1": 597,
+      "rows_run2": 597,
+      "sha256_run1": "237d0efe4de72a35",
+      "sha256_run2": "237d0efe4de72a35",
+      "identical": true
+    },
+    {
+      "file": "seed.sql",
+      "rows_run1": 337803,
+      "rows_run2": 337803,
+      "sha256_run1": "4a146c7f7344f3c7",
+      "sha256_run2": "4a146c7f7344f3c7",
+      "identical": true
+    },
+    {
+      "file": "verification_requests.csv",
+      "rows_run1": 5000,
+      "rows_run2": 5000,
+      "sha256_run1": "d9f765645deb83db",
+      "sha256_run2": "d9f765645deb83db",
+      "identical": true
+    }
+  ]
+}

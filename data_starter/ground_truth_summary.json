@@ -1,0 +1,9 @@
+{
+  "anomalies_by_type": {
+    "CREDENTIAL_ISSUED_BEFORE_COMPLETION": 5,
+    "DUPLICATE_CREDENTIAL_ID": 2,
+    "REVOKED_CREDENTIAL_VERIFIES_AS_ACTIVE": 2,
+    "ALTERED_PAYLOAD_HASH_NOT_DETECTED": 2
+  },
+  "verification_decisions": 250
+}

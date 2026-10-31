@@ -1,0 +1,122 @@
+entity,file,field,type,required,allowed_values,unit,unique,validation_rule,is_primary_key
+Actor (supporting),actors.csv,actor_id,STRING,Y,ACT-NNNN,-,Y,PK; zero-padded; ACT-0000 reserved for SYSTEM,Y
+Actor (supporting),actors.csv,display_name,STRING,Y,synthetic name,-,N,non-empty,N
+Actor (supporting),actors.csv,role,STRING,Y,SYSTEM|INSTRUCTOR|ACADEMIC_ADMIN|SUPPORT_STAFF|PLATFORM_ADMIN,-,N,one of ROLES,N
+Actor (supporting),actors.csv,email,STRING,Y,@example.org,-,Y,synthetic address on reserved domain,N
+Actor (supporting),actors.csv,status,STRING,Y,ACTIVE|INACTIVE,-,N,,N
+Issuer,issuers.csv,issuer_id,STRING,Y,ISS-NNN,-,Y,PK,Y
+Issuer,issuers.csv,issuer_name,STRING,Y,text,-,Y,,N
+Issuer,issuers.csv,issuer_type,STRING,Y,UNIVERSITY|TRAINING_PROVIDER|PROFESSIONAL_BODY,-,N,,N
+Issuer,issuers.csv,country,STRING,Y,ISO 3166-1 alpha-2,-,N,,N
+Issuer,issuers.csv,status,STRING,Y,ACTIVE|SUPERSEDED,-,N,SUPERSEDED iff effective_to is set,N
+Issuer,issuers.csv,effective_from,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,<= effective_to,N
+Issuer,issuers.csv,effective_to,DATE,N,ISO-8601 YYYY-MM-DD,date,N,set when issuer is superseded,N
+Issuer,issuers.csv,predecessor_issuer_id,STRING,N,FK issuers.issuer_id,-,N,issuer change lineage,N
+Issuer,issuers.csv,signing_key_id,STRING,Y,<issuer_id>-K1,-,Y,key used to sign credentials,N
+Issuer,issuers.csv,key_fingerprint,STRING,Y,16 hex,-,Y,"sha256(key)[:16]; demo key, derived from seed",N
+Learner,learners.csv,learner_id,STRING,Y,LRN-NNNNNN,-,Y,PK; immutable,Y
+Learner,learners.csv,first_name,STRING,Y,synthetic,-,N,duplicates allowed,N
+Learner,learners.csv,last_name,STRING,Y,synthetic,-,N,duplicates allowed,N
+Learner,learners.csv,full_name,STRING,Y,first + ' ' + last,-,N,"NOT unique, NOT an identity key",N
+Learner,learners.csv,email,STRING,Y,@example.org,-,Y,lower-case; identity attribute,N
+Learner,learners.csv,date_of_birth,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,learner >= 18 on created_at; identity attribute,N
+Learner,learners.csv,country,STRING,Y,ISO 3166-1 alpha-2,-,N,,N
+Learner,learners.csv,status,STRING,Y,ACTIVE|SUSPENDED|CLOSED,-,N,,N
+Learner,learners.csv,created_at,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,<= first enrolled_at,N
+Course,courses.csv,course_id,STRING,Y,CRS-NNNN,-,Y,PK,Y
+Course,courses.csv,title,STRING,Y,text,-,N,titles repeat across issuers,N
+Course,courses.csv,category,STRING,Y,text,-,N,,N
+Course,courses.csv,level,STRING,Y,BEGINNER|INTERMEDIATE|ADVANCED,-,N,,N
+Course,courses.csv,credit_hours,INTEGER,Y,8..120,hours,N,,N
+Course,courses.csv,duration_days,INTEGER,Y,>= 14,days,N,= 14 + 0.8 * credit_hours,N
+Course,courses.csv,num_assessments,INTEGER,Y,3..5,count,N,= rule.min_assessments,N
+Course,courses.csv,instructor_id,STRING,Y,FK actors.actor_id (role INSTRUCTOR),-,N,,N
+Course,courses.csv,issuer_id,STRING,Y,FK issuers.issuer_id,-,N,CURRENT issuer = last course_issuer_history row,N
+Course,courses.csv,status,STRING,Y,ACTIVE|RETIRED,-,N,RETIRED iff effective_to set,N
+Course,courses.csv,effective_from,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,<= effective_to,N
+Course,courses.csv,effective_to,DATE,N,ISO-8601 YYYY-MM-DD,date,N,,N
+Course-Issuer bridge (N:M over time),course_issuer_history.csv,history_id,STRING,Y,CIH-NNNNNN,-,Y,PK,Y
+Course-Issuer bridge (N:M over time),course_issuer_history.csv,course_id,STRING,Y,FK courses.course_id,-,N,,N
+Course-Issuer bridge (N:M over time),course_issuer_history.csv,issuer_id,STRING,Y,FK issuers.issuer_id,-,N,,N
+Course-Issuer bridge (N:M over time),course_issuer_history.csv,effective_from,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,periods per course do not overlap,N
+Course-Issuer bridge (N:M over time),course_issuer_history.csv,effective_to,DATE,N,ISO-8601 YYYY-MM-DD,date,N,NULL = current,N
+Course-Issuer bridge (N:M over time),course_issuer_history.csv,change_reason,STRING,Y,INITIAL|ISSUER_SUCCESSION|ISSUER_TRANSFER,-,N,,N
+CredentialRule,credential_rules.csv,rule_id,STRING,Y,RUL-NNNN,-,Y,PK,Y
+CredentialRule,credential_rules.csv,course_id,STRING,Y,FK courses.course_id,-,N,,N
+CredentialRule,credential_rules.csv,rule_version,INTEGER,Y,1..2,-,N,"(course_id, rule_version) unique",N
+CredentialRule,credential_rules.csv,min_progress_pct,INTEGER,Y,100,%,N,,N
+CredentialRule,credential_rules.csv,min_assessments,INTEGER,Y,3..5,count,N,,N
+CredentialRule,credential_rules.csv,min_final_score,INTEGER,Y,60..85,points of 100,N,inclusive threshold (>=),N
+CredentialRule,credential_rules.csv,min_attendance_pct,INTEGER,Y,0|70|80,%,N,0 = no attendance requirement,N
+CredentialRule,credential_rules.csv,validity_months,INTEGER,N,6|12|24|36|60,months,N,NULL = never expires,N
+CredentialRule,credential_rules.csv,effective_from,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,rule applies to enrollments on/after,N
+CredentialRule,credential_rules.csv,effective_to,DATE,N,ISO-8601 YYYY-MM-DD,date,N,,N
+CredentialRule,credential_rules.csv,status,STRING,Y,ACTIVE|SUPERSEDED|RETIRED,-,N,,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,completion_id,STRING,Y,CMP-<learner-id>-<course-id>,-,Y,"PK; (learner,course) unique",Y
+CompletionRecord (Learner-Course bridge),completion_records.csv,learner_id,STRING,Y,FK learners.learner_id,-,N,,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,course_id,STRING,Y,FK courses.course_id,-,N,,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,rule_id,STRING,Y,FK credential_rules.rule_id,-,N,rule in force at enrolled_at,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,enrolled_at,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,>= learner.created_at,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,closed_at,DATE,N,ISO-8601 YYYY-MM-DD,date,N,set for COMPLETED/FAILED/WITHDRAWN,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,completed_at,DATE,N,ISO-8601 YYYY-MM-DD,date,N,set only when COMPLETED (= closed_at),N
+CompletionRecord (Learner-Course bridge),completion_records.csv,status,STRING,Y,IN_PROGRESS|COMPLETED|FAILED|WITHDRAWN,-,N,COMPLETED iff coursework finished AND rule met,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,progress_pct,INTEGER,Y,0..100,%,N,,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,assessments_taken,INTEGER,Y,>= 0,count,N,= count(assessments rows),N
+CompletionRecord (Learner-Course bridge),completion_records.csv,final_score,DECIMAL,N,0..100,points,N,"= round(mean(assessment.score), 2)",N
+CompletionRecord (Learner-Course bridge),completion_records.csv,attendance_pct,DECIMAL,Y,0..100,%,N,,N
+CompletionRecord (Learner-Course bridge),completion_records.csv,requirements_met,BOOLEAN,Y,0|1,-,N,"derived: evaluate_rule(rule, ...)",N
+CompletionRecord (Learner-Course bridge),completion_records.csv,failure_reasons,STRING,N,PROGRESS_BELOW_MIN|ASSESSMENTS_MISSING|SCORE_BELOW_MIN|ATTENDANCE_BELOW_MIN,-,N,pipe-separated; set only for FAILED,N
+Assessment (supporting),assessments.csv,assessment_id,STRING,Y,AST-NNNNNNN,-,Y,PK,Y
+Assessment (supporting),assessments.csv,completion_id,STRING,Y,FK completion_records.completion_id,-,N,,N
+Assessment (supporting),assessments.csv,sequence_no,INTEGER,Y,1..5,-,N,"(completion_id, sequence_no) unique",N
+Assessment (supporting),assessments.csv,assessment_type,STRING,Y,QUIZ|PROJECT|FINAL_EXAM,-,N,,N
+Assessment (supporting),assessments.csv,score,INTEGER,Y,0..100,points,N,,N
+Assessment (supporting),assessments.csv,max_score,INTEGER,Y,100,points,N,,N
+Assessment (supporting),assessments.csv,taken_at,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,within enrolment window,N
+Credential,credentials.csv,credential_id,STRING,Y,CRD-YYYY-NNNNNN,-,Y,PK (logical). Injected DUPLICATE_CREDENTIAL_ID rows violate this on purpose,Y
+Credential,credentials.csv,completion_id,STRING,Y,FK completion_records.completion_id,-,Y,1 completion -> at most 1 credential,N
+Credential,credentials.csv,learner_id,STRING,Y,FK learners.learner_id,-,N,= completion.learner_id,N
+Credential,credentials.csv,course_id,STRING,Y,FK courses.course_id,-,N,= completion.course_id,N
+Credential,credentials.csv,rule_id,STRING,Y,FK credential_rules.rule_id,-,N,= completion.rule_id,N
+Credential,credentials.csv,issuer_id,STRING,Y,FK issuers.issuer_id,-,N,issuer of the course ON issued_at date,N
+Credential,credentials.csv,issued_at,TIMESTAMP,Y,"UTC, ISO-8601 YYYY-MM-DDTHH:MM:SSZ",UTC,N,>= completion.completed_at (anomaly otherwise),N
+Credential,credentials.csv,expires_at,TIMESTAMP,N,"UTC, ISO-8601 YYYY-MM-DDTHH:MM:SSZ",UTC,N,= issued_at + rule.validity_months,N
+Credential,credentials.csv,status,STRING,Y,ACTIVE|REVOKED|EXPIRED,-,N,"snapshot at status_as_of, derived by replaying audit events",N
+Credential,credentials.csv,status_as_of,DATE,Y,ISO-8601 YYYY-MM-DD,date,N,dataset as-of date,N
+Credential,credentials.csv,payload_json,JSON,Y,canonical JSON,-,N,the signed payload,N
+Credential,credentials.csv,payload_hash,STRING,Y,64 hex,-,N,SHA-256(payload_json),N
+Credential,credentials.csv,hash_algo,STRING,Y,SHA-256,-,N,,N
+Credential,credentials.csv,signature,STRING,Y,64 hex,-,N,"HMAC-SHA256(issuer key, payload_hash)",N
+Credential,credentials.csv,signature_alg,STRING,Y,HMAC-SHA256,-,N,,N
+Credential,credentials.csv,signing_key_id,STRING,Y,FK issuers.signing_key_id,-,N,,N
+Revocation,revocations.csv,revocation_id,STRING,Y,REV-<credential-id>-NN,-,Y,PK; NN = revocation_seq,Y
+Revocation,revocations.csv,credential_id,STRING,Y,FK credentials.credential_id,-,N,,N
+Revocation,revocations.csv,revocation_seq,INTEGER,Y,1..2,-,N,contiguous per credential,N
+Revocation,revocations.csv,revoked_at,TIMESTAMP,Y,"UTC, ISO-8601 YYYY-MM-DDTHH:MM:SSZ",UTC,N,> credential.issued_at,N
+Revocation,revocations.csv,reason_code,STRING,Y,ISSUED_IN_ERROR|ACADEMIC_MISCONDUCT|LEARNER_REQUEST|FRAUD|POLICY_VIOLATION|COURSE_RETIRED,-,N,,N
+Revocation,revocations.csv,revoked_by_actor_id,STRING,Y,FK actors.actor_id,-,N,staff role by reason,N
+VerificationRequest,verification_requests.csv,verification_id,STRING,Y,VER-YYYY-NNNNNN,-,Y,PK; ordered by requested_at,Y
+VerificationRequest,verification_requests.csv,credential_id,STRING,Y,credential ID as presented,-,N,logical FK; unknown IDs are legitimate (NOT_FOUND),N
+VerificationRequest,verification_requests.csv,requested_at,TIMESTAMP,Y,"UTC, ISO-8601 YYYY-MM-DDTHH:MM:SSZ",UTC,N,,N
+VerificationRequest,verification_requests.csv,requester_type,STRING,Y,EMPLOYER|UNIVERSITY|BACKGROUND_CHECK|LEARNER|GOVERNMENT,-,N,,N
+VerificationRequest,verification_requests.csv,requester_org,STRING,Y,text,-,N,,N
+VerificationRequest,verification_requests.csv,channel,STRING,Y,API|PORTAL|EMAIL,-,N,,N
+VerificationRequest,verification_requests.csv,claimed_name,STRING,N,text,-,N,informational only; never used for the decision,N
+VerificationRequest,verification_requests.csv,claimed_dob,DATE,N,ISO-8601 YYYY-MM-DD,date,N,identity attribute,N
+VerificationRequest,verification_requests.csv,claimed_email_hash,STRING,N,64 hex,-,N,sha256(lower(email)),N
+VerificationRequest,verification_requests.csv,presented_payload_hash,STRING,N,64 hex,-,N,hash from QR/API if supplied,N
+VerificationRequest,verification_requests.csv,result,STRING,Y,VALID|REVOKED|EXPIRED|NOT_FOUND|HASH_MISMATCH|IDENTITY_MISMATCH|INSUFFICIENT_IDENTITY|AMBIGUOUS_ID,-,N,RECORDED outcome of the platform at request time,N
+VerificationRequest,verification_requests.csv,result_detail,STRING,Y,text,-,N,standard text for result,N
+VerificationRequest,verification_requests.csv,response_ms,INTEGER,Y,10..5000,ms,N,,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,audit_event_id,STRING,Y,AUD-NNNNNNNN,-,Y,PK; strictly increasing,Y
+"AuditEvent (append-only, hash-chained)",audit_events.csv,event_ts,TIMESTAMP,Y,"UTC, ISO-8601 YYYY-MM-DDTHH:MM:SSZ",UTC,N,non-decreasing in audit_event_id order,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,entity_type,STRING,Y,Course|CredentialRule|CompletionRecord|Credential|VerificationRequest,-,N,polymorphic reference,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,entity_id,STRING,Y,ID of the entity,-,N,polymorphic FK (validated per entity_type),N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,event_type,STRING,Y,RULE_PUBLISHED|ISSUER_CHANGED|LEARNER_ENROLLED|COMPLETION_STATE_CHANGED|CREDENTIAL_ISSUED|CREDENTIAL_REVOKED|REVOCATION_REVERSED|CREDENTIAL_EXPIRED|VERIFICATION_PERFORMED,-,N,,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,actor_type,STRING,Y,SYSTEM|LEARNER|STAFF|EXTERNAL_VERIFIER,-,N,,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,actor_id,STRING,Y,actor / learner / org,-,N,STAFF/SYSTEM -> actors.actor_id; LEARNER -> learner_id,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,old_state,STRING,N,state before,-,N,,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,new_state,STRING,N,state after,-,N,,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,details_json,JSON,Y,JSON,-,N,,N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,prev_event_hash,STRING,Y,64 hex,-,N,event_hash of previous row (zeros for first),N
+"AuditEvent (append-only, hash-chained)",audit_events.csv,event_hash,STRING,Y,64 hex,-,Y,sha256(prev_event_hash|row fields) -> tamper evidence,N
